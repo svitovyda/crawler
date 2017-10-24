@@ -11,7 +11,7 @@ When the maximum amount of pages is reached (at the moment when page content is 
 * correct handling of relative urls
 * normal unit tests with mocking of external resources
 * integration tests
-* search for multiple occurrences of search query
+* search for multiple occurrences of the query in one page
 * search and all the validations are very primitive
 * there are scenarios when infinite looping is possible
 
