@@ -18,6 +18,7 @@ When the maximum amount of pages is reached (at the moment when page content is 
 
 #### To run -
 `sbt run`
+
 Run tests - `sbt test`.
 
 
@@ -27,9 +28,13 @@ The UI part doesn't work, but it is possible to use API by any tool like `curl`.
 
 #### Protocol:
 `GET` `http://localhost:9000/pages/count` - amount of links that are stored in memory (both in "Loading" and "Ready" status)
+
 `GET` `http://localhost:9000/pages/urls` - see all stored URLs
+
 `GET` `http://localhost:9000/pages/content` with body `{url: "..."}` - will return the full content of the page
+
 `POST` `http://localhost:9000/pages` with body `{url: "..."}` - add URL into system
+
 `GET` `http://localhost:9000/pages/search` with body `{query: "..."}` - search in 
 
 
