@@ -51,7 +51,6 @@ class EngineActor(implicit ec: ExecutionContext) extends Actor with ActorLogging
             PageService.addUrl(url).map { case ScrapingResult(text, urls) =>
               self ! Command.UpdatePageState(url, text)
               urls foreach withAllowedUrlAndDepth(url, 1) { allowed =>
-                storage += allowed -> PageState(url)
                 self ! Command.AddSubUrl(allowed)
               }
               receiver ! Response.Count(storage.size)
@@ -65,10 +64,10 @@ class EngineActor(implicit ec: ExecutionContext) extends Actor with ActorLogging
       )
 
     case Command.AddSubUrl(url, depth) =>
+      storage += url -> PageState(url)
       PageService.addUrl(url).map { case ScrapingResult(text, urls) =>
         self ! Command.UpdatePageState(url, text)
         urls foreach withAllowedUrlAndDepth(url, depth + 1) { allowed =>
-          storage += allowed -> PageState(url)
           self ! Command.AddSubUrl(allowed)
         }
       }.recover { case _ => self ! Command.RemoveUrl(url) }
